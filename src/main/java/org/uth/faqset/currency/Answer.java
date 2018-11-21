@@ -9,24 +9,27 @@ public class Answer
   private String _keywords = null;
   private List<Score> _scores = null;
   private long _creationDate = 0;
+  private String _contributor = null;
 
   // Accessors
   public String getAnswer() { return _answer; }
   public String getKeywords() { return _keywords; }
   public List<Score> getScores() { return _scores; }
   public long getCreationDate() { return _creationDate; }
+  public String getContributor() { return _contributor; }
 
-  public Answer( String answer )
+  public Answer( String answer, String contributor )
   {
-    this( answer, answer );
+    this( answer, answer, contributor );
   }
 
-  public Answer( String answer, String keywords )
+  public Answer( String answer, String keywords, String contributor )
   {
     _answer = answer;
     _keywords = Stopwords.applyStopWords(keywords);
     _scores = new ArrayList<Score>();
     _creationDate = System.currentTimeMillis();
+    _contributor = contributor;
   }
 
   // Mutators

@@ -9,25 +9,28 @@ public class Question
   private String _keywords = null;
   private List<Answer> _answers = null;  
   private long _creationDate = 0;
+  private String _contributor = null;
 
   // Accessors
   public String getQuestion() { return _question; }
   public String getKeywords() { return _keywords; }
   public List<Answer> getAnswers() { return _answers; }
   public long getCreationDate() { return _creationDate; }
+  public String getContributor() { return _contributor; }
 
-  public Question( String question, String keywords )
+  public Question( String question, String keywords, String contributor )
   {
     _question = question;
     _creationDate = System.currentTimeMillis();
+    _contributor = contributor;
 
     // Remove all stopwords from the keywords for better searching
     _keywords = Stopwords.applyStopWords(keywords);
   }
 
-  public Question( String question )
+  public Question( String question, String contributor )
   {
-    this(question,question);
+    this(question,question, contributor);
   }
 
   // Mutators
