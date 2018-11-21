@@ -6,15 +6,18 @@ public class Score
 {
   private int _score = 0;
   private String _contributor = null;
+  private long _creationDate = 0;
 
   // Accessors
   public int getScore() { return _score; }
   public String getContributor() { return _contributor; }
+  public long getCreationDate() { return _creationDate; }
 
   public Score( int score, String contributor )
   {
     _score = score;
     _contributor = contributor;
+    _creationDate = System.currentTimeMillis();
   }
 
   /**

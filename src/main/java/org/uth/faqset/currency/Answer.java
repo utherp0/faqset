@@ -8,11 +8,13 @@ public class Answer
   private String _answer = null;
   private String _keywords = null;
   private List<Score> _scores = null;
+  private long _creationDate = 0;
 
   // Accessors
   public String getAnswer() { return _answer; }
   public String getKeywords() { return _keywords; }
   public List<Score> getScores() { return _scores; }
+  public long getCreationDate() { return _creationDate; }
 
   public Answer( String answer )
   {
@@ -22,8 +24,9 @@ public class Answer
   public Answer( String answer, String keywords )
   {
     _answer = answer;
-    _keywords = keywords;
+    _keywords = Stopwords.applyStopWords(keywords);
     _scores = new ArrayList<Score>();
+    _creationDate = System.currentTimeMillis();
   }
 
   // Mutators
