@@ -1,8 +1,8 @@
 package org.uth.faqset.tests;
 
-import java.util.List;
-import java.time.chrono.IsoEra;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.uth.faqset.currency.Answer;
 import org.uth.faqset.currency.Question;
 
@@ -53,5 +53,19 @@ public class SimpleFAQSetTest1
     question2.addAnswer(question2a3);
 
     faq1.add(question2);
+
+    // Output the XML
+    try
+    {
+      for( Question question : faq1 )
+      {
+        System.out.println( "" );
+        System.out.println( question.export("xml", ""));
+      }
+    }
+    catch( Exception exc )
+    {
+      System.out.println( "Exception occured " + exc.toString());
+    }
   }
 }

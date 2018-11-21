@@ -1,7 +1,10 @@
 package org.uth.faqset.currency;
 
-import org.uth.faqset.exceptions.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.uth.faqset.exceptions.FAQSetFormatException;
+import org.uth.faqset.utils.DateFormatter;
 
 public class Question
 {
@@ -26,6 +29,8 @@ public class Question
 
     // Remove all stopwords from the keywords for better searching
     _keywords = Stopwords.applyStopWords(keywords);
+
+    _answers = new ArrayList<Answer>();
   }
 
   public Question( String question, String contributor )
@@ -55,7 +60,7 @@ public class Question
     return false;
   }
 
-  public String export( String format ) throws FAQSetFormatException
+  public String export( String format, String padding )
   {
     // Format defines the output mechanism for the object - currently XML (soon YAML, JSON)
     StringBuilder output = new StringBuilder();
@@ -64,9 +69,35 @@ public class Question
     {
       case "xml":
       {
-        output.append( "<faqset>\n");
+        output.append( padding + "<question>\n");
+        output.append( padding + "  <text>" + _question + "</text>\n");
+        output.append( padding + "  <keywords>" + _keywords + "</keywords>\n");
+        output.append( padding + "  <created>" + DateFormatter.longDateFormat( _creationDate ) + "</created>\n");
+        output.append( padding + "  <answers>\n");
 
-        output.append( "</faqset>");
+        for( Answer answer : _answers )
+        {
+          output.append( padding + "    <answer>\n");
+          output.append( padding + "      <text>" + answer.getAnswer() + "</text>\n");
+          output.append( padding + "      <contributor>" + answer.getContributor() + "</contributor>\n");
+          output.append( padding + "      <created>" + DateFormatter.longDateFormat(answer.getCreationDate()) + "</created>\n");
+          output.append( padding + "      <scores>\n");
+
+          for( Score score : answer.getScores())
+          {
+            output.append( padding + "        <score>\n");
+            output.append( padding + "          <value>" + score.getScore() + "</value>\n");
+            output.append( padding + "          <contributor>" + score.getContributor() + "</contributor>\n");
+            output.append( padding + "          <created>" + DateFormatter.longDateFormat(score.getCreationDate()) + "</created>\n");
+            output.append( padding + "        </score>\n");
+          }
+        
+          output.append( padding + "      </scores>\n");
+          output.append( padding + "    </answer>\n");
+        }
+
+        output.append( padding + " </answers>\n");
+        output.append( padding + "</question>");
 
         break;
       }
